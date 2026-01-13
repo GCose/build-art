@@ -254,17 +254,8 @@ function initTrustAnimation() {
   const trustTitleBlock = document.querySelector(".trust__title-block");
   const trustLocations = document.querySelector(".trust__locations");
   const trustDescription = document.querySelector(".trust__description");
-  const speedLines = document.querySelectorAll(".trust .speed-line");
 
   if (!trustSection) return;
-
-  gsap.set(trustImage1, { opacity: 0, x: 100 }); // Left image comes from right
-  gsap.set(trustImage2, { opacity: 0, x: -100 }); // Right image comes from left
-  gsap.set(trustImage3, { opacity: 0, x: 100 }); // Left image comes from right
-  gsap.set([trustTitleBlock, trustLocations, trustDescription], {
-    opacity: 0,
-    y: 30,
-  });
 
   let hasEntered = false;
 
@@ -275,71 +266,58 @@ function initTrustAnimation() {
           hasEntered = true;
 
           const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: trustSection,
-              start: "top 70%",
-              end: "top 20%",
-              scrub: 1,
-            },
+            defaults: { ease: "power3.out" },
           });
 
-          speedLines.forEach((line, index) => {
-            tl.fromTo(
-              line,
+          tl.from(trustImage1, {
+            opacity: 0,
+            y: 60,
+            duration: 0.8,
+          })
+            .from(
+              trustTitleBlock,
               {
-                y: window.innerHeight,
                 opacity: 0,
+                y: 30,
+                duration: 0.8,
               },
-              {
-                y: -window.innerHeight,
-                opacity: 1,
-                duration: 0.4,
-                ease: "none",
-              },
-              index * 0.08
-            );
-          });
-
-          tl.to(
-            trustImage1,
-            {
-              opacity: 1,
-              x: 0,
-              duration: 0.3,
-              ease: "power3.out",
-            },
-            0
-          )
-            .to(
+              "-=0.4"
+            )
+            .from(
               trustImage2,
               {
-                opacity: 1,
-                x: 0,
-                duration: 0.3,
-                ease: "power3.out",
+                opacity: 0,
+                y: 80,
+                duration: 0.8,
               },
-              0.1
+              "-=0.4"
             )
-            .to(
+            .from(
+              trustLocations,
+              {
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+              },
+              "-=0.4"
+            )
+            .from(
               trustImage3,
               {
-                opacity: 1,
-                x: 0,
-                duration: 0.3,
-                ease: "power3.out",
+                opacity: 0,
+                y: 60,
+                duration: 0.8,
               },
-              0.2
+              "-=0.4"
             )
-            .to(
-              [trustTitleBlock, trustLocations, trustDescription],
+            .from(
+              trustDescription,
               {
-                opacity: 1,
-                y: 0,
-                duration: 0.3,
-                stagger: 0.05,
-                ease: "power3.out",
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
               },
-              0.3
+              "-=0.4"
             );
         }
       });
@@ -477,6 +455,242 @@ function initServicesAnimation() {
   observer.observe(section);
 }
 
+function initPersuasionAnimation() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const persuasionSection = document.querySelector(".persuasion");
+  const headline = document.querySelector(".persuasion__headline");
+  const proofText = document.querySelector(".persuasion__proof");
+  const image1 = document.querySelector(".persuasion__image--1");
+  const image2 = document.querySelector(".persuasion__image--2");
+  const image3 = document.querySelector(".persuasion__image--3");
+  const bullets = document.querySelectorAll(".persuasion__bullets li");
+  const cta = document.querySelector(".persuasion__cta");
+
+  if (!persuasionSection) return;
+
+  let hasEntered = false;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasEntered) {
+          hasEntered = true;
+
+          const tl = gsap.timeline({
+            defaults: { ease: "power3.out" },
+          });
+
+          tl.from(headline, {
+            opacity: 0,
+            y: 80,
+            duration: 0.8,
+          })
+            .from(
+              image1,
+              {
+                opacity: 0,
+                y: 60,
+                duration: 0.8,
+              },
+              "-=0.4"
+            )
+            .from(
+              proofText,
+              {
+                opacity: 0,
+                y: 40,
+                duration: 0.8,
+              },
+              "-=0.4"
+            )
+            .from(
+              image2,
+              {
+                opacity: 0,
+                y: 80,
+                duration: 0.8,
+              },
+              "-=0.4"
+            );
+
+          bullets.forEach((bullet) => {
+            tl.from(
+              bullet,
+              {
+                opacity: 0,
+                y: 30,
+                duration: 0.6,
+              },
+              "-=0.5"
+            );
+          });
+
+          tl.from(
+            image3,
+            {
+              opacity: 0,
+              y: 100,
+              duration: 0.8,
+            },
+            "-=0.4"
+          ).from(
+            cta,
+            {
+              opacity: 0,
+              y: 20,
+              duration: 0.6,
+            },
+            "-=0.5"
+          );
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  observer.observe(persuasionSection);
+
+  gsap.to(image1.querySelector("img"), {
+    y: -80,
+    ease: "none",
+    scrollTrigger: {
+      trigger: persuasionSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  gsap.to(image2.querySelector("img"), {
+    y: -120,
+    ease: "none",
+    scrollTrigger: {
+      trigger: persuasionSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  gsap.to(image3.querySelector("img"), {
+    y: -60,
+    ease: "none",
+    scrollTrigger: {
+      trigger: persuasionSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  gsap.to(headline, {
+    y: -100,
+    ease: "none",
+    scrollTrigger: {
+      trigger: persuasionSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+}
+
+function initProcessAnimation() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const processSection = document.querySelector(".process");
+  const headline = document.querySelector(".process__headline");
+  const items = document.querySelectorAll(".process__item");
+  const cta = document.querySelector(".process__cta");
+
+  if (!processSection) return;
+
+  let hasEntered = false;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasEntered) {
+          hasEntered = true;
+
+          const tl = gsap.timeline({
+            defaults: { ease: "power3.out" },
+          });
+
+          tl.from(headline, {
+            opacity: 0,
+            y: 80,
+            duration: 0.8,
+          });
+
+          items.forEach((item) => {
+            const image = item.querySelector(".process__image");
+            const step = item.querySelector(".process__step");
+
+            tl.from(
+              image,
+              {
+                opacity: 0,
+                y: 60,
+                duration: 0.8,
+              },
+              "-=0.4"
+            ).from(
+              step,
+              {
+                opacity: 0,
+                y: 40,
+                duration: 0.8,
+              },
+              "-=0.6"
+            );
+          });
+
+          tl.from(
+            cta,
+            {
+              opacity: 0,
+              y: 20,
+              duration: 0.6,
+            },
+            "-=0.4"
+          );
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  observer.observe(processSection);
+
+  items.forEach((item) => {
+    const image = item.querySelector(".process__image img");
+
+    gsap.to(image, {
+      y: -100,
+      ease: "none",
+      scrollTrigger: {
+        trigger: item,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+  });
+
+  gsap.to(headline, {
+    y: -60,
+    ease: "none",
+    scrollTrigger: {
+      trigger: processSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+}
+
 function init() {
   initLenis();
   initHeaderScroll();
@@ -485,6 +699,8 @@ function init() {
   initIntroAnimation();
   initTrustAnimation();
   initServicesAnimation();
+  initPersuasionAnimation();
+  initProcessAnimation();
 }
 
 init();
