@@ -181,7 +181,8 @@ function initHeroAnimations() {
 function initIntroAnimation() {
   const introSection = document.querySelector(".intro");
   const introText = document.querySelector(".intro__text");
-  const introImages = document.querySelectorAll(".intro__image");
+  const speedLines = document.querySelectorAll(".intro .speed-line");
+
   if (!introText) return;
 
   Splitting({ target: introText, by: "words" });
@@ -205,44 +206,34 @@ function initIntroAnimation() {
             },
           });
 
-          const totalWords = words.length;
+          speedLines.forEach((line, index) => {
+            tl.fromTo(
+              line,
+              {
+                y: window.innerHeight,
+                opacity: 0,
+              },
+              {
+                y: -window.innerHeight,
+                opacity: 1,
+                duration: 0.5,
+                ease: "none",
+              },
+              index * 0.2
+            );
+          });
 
           words.forEach((word, index) => {
-            tl.to(word, {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: "power2.out",
-            });
-
-            if (index === Math.floor(totalWords * 0.1)) {
-              tl.to(
-                introImages[0],
-                { y: 0, opacity: 1, duration: 2, ease: "power2.out" },
-                "<"
-              );
-            }
-            if (index === Math.floor(totalWords * 0.3)) {
-              tl.to(
-                introImages[1],
-                { y: 0, opacity: 1, duration: 2, ease: "power2.out" },
-                "<"
-              );
-            }
-            if (index === Math.floor(totalWords * 0.5)) {
-              tl.to(
-                introImages[2],
-                { y: 0, opacity: 1, duration: 2, ease: "power2.out" },
-                "<"
-              );
-            }
-            if (index === Math.floor(totalWords * 0.7)) {
-              tl.to(
-                introImages[3],
-                { y: 0, opacity: 1, duration: 2, ease: "power2.out" },
-                "<"
-              );
-            }
+            tl.to(
+              word,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: "power2.out",
+              },
+              index * 0.1
+            );
           });
         }
       });
@@ -257,22 +248,170 @@ function initTrustAnimation() {
   gsap.registerPlugin(ScrollTrigger);
 
   const trustSection = document.querySelector(".trust");
-  const trustElements = document.querySelectorAll(".trust__number, .trust__label, .trust__locations, .trust__description");
+  const trustImage1 = document.querySelector(".trust__image--1");
+  const trustImage2 = document.querySelector(".trust__image--2");
+  const trustImage3 = document.querySelector(".trust__image--3");
+  const trustTitleBlock = document.querySelector(".trust__title-block");
+  const trustLocations = document.querySelector(".trust__locations");
+  const trustDescription = document.querySelector(".trust__description");
+  const speedLines = document.querySelectorAll(".trust .speed-line");
 
-  if (!trustSection || trustElements.length === 0) return;
+  if (!trustSection) return;
 
-  gsap.set(trustElements, { opacity: 0, y: 30 });
+  gsap.set(trustImage1, { opacity: 0, x: 100 }); // Left image comes from right
+  gsap.set(trustImage2, { opacity: 0, x: -100 }); // Right image comes from left
+  gsap.set(trustImage3, { opacity: 0, x: 100 }); // Left image comes from right
+  gsap.set([trustTitleBlock, trustLocations, trustDescription], {
+    opacity: 0,
+    y: 30,
+  });
 
-  gsap.to(trustElements, {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    stagger: 0.15,
-    ease: "power3.out",
+  let hasEntered = false;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasEntered) {
+          hasEntered = true;
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: trustSection,
+              start: "top 70%",
+              end: "top 20%",
+              scrub: 1,
+            },
+          });
+
+          speedLines.forEach((line, index) => {
+            tl.fromTo(
+              line,
+              {
+                y: window.innerHeight,
+                opacity: 0,
+              },
+              {
+                y: -window.innerHeight,
+                opacity: 1,
+                duration: 0.4,
+                ease: "none",
+              },
+              index * 0.08
+            );
+          });
+
+          tl.to(
+            trustImage1,
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.3,
+              ease: "power3.out",
+            },
+            0
+          )
+            .to(
+              trustImage2,
+              {
+                opacity: 1,
+                x: 0,
+                duration: 0.3,
+                ease: "power3.out",
+              },
+              0.1
+            )
+            .to(
+              trustImage3,
+              {
+                opacity: 1,
+                x: 0,
+                duration: 0.3,
+                ease: "power3.out",
+              },
+              0.2
+            )
+            .to(
+              [trustTitleBlock, trustLocations, trustDescription],
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.3,
+                stagger: 0.05,
+                ease: "power3.out",
+              },
+              0.3
+            );
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  observer.observe(trustSection);
+
+  gsap.to(trustImage1.querySelector("img"), {
+    y: -150,
+    ease: "none",
     scrollTrigger: {
       trigger: trustSection,
-      start: "top 80%",
-      once: true,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  gsap.to(trustImage2.querySelector("img"), {
+    y: -100,
+    ease: "none",
+    scrollTrigger: {
+      trigger: trustSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  gsap.to(trustImage3.querySelector("img"), {
+    y: -40,
+    ease: "none",
+    scrollTrigger: {
+      trigger: trustSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  gsap.to(trustTitleBlock, {
+    y: -120,
+    ease: "none",
+    scrollTrigger: {
+      trigger: trustSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  gsap.to(trustLocations, {
+    y: -60,
+    ease: "none",
+    scrollTrigger: {
+      trigger: trustSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  gsap.to(trustDescription, {
+    y: -20,
+    ease: "none",
+    scrollTrigger: {
+      trigger: trustSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
     },
   });
 }
@@ -294,7 +433,6 @@ function initServicesAnimation() {
         if (entry.isIntersecting && !hasEntered) {
           hasEntered = true;
 
-          // Pin the wrapper
           ScrollTrigger.create({
             trigger: section,
             start: "top top",
@@ -310,7 +448,7 @@ function initServicesAnimation() {
           });
 
           cards.forEach((card, index) => {
-            if (index === 0) return; 
+            if (index === 0) return;
 
             const progress = (index - 1) / cards.length;
             const nextProgress = index / cards.length;
