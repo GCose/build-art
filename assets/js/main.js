@@ -834,6 +834,266 @@ function initSocialProofAnimation() {
   });
 }
 
+function initSeoValueAnimation() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const seoValueSection = document.querySelector(".seo-value");
+  const headline = document.querySelector(".seo-value__headline");
+  const content = document.querySelector(".seo-value__text");
+  const locations = document.querySelectorAll(".seo-value__location-item");
+  const backgroundMap = document.querySelector(".seo-value__map");
+
+  if (!seoValueSection) return;
+
+  if (headline) {
+    Splitting({ target: headline, by: "words" });
+  }
+
+  let hasEntered = false;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasEntered) {
+          hasEntered = true;
+
+          const words = headline.querySelectorAll(".word");
+          const tl = gsap.timeline({
+            defaults: { ease: "power3.out" },
+          });
+
+          if (backgroundMap) {
+            tl.from(
+              backgroundMap,
+              {
+                opacity: 0,
+                scale: 0.8,
+                duration: 1.5,
+                ease: "power2.out",
+              },
+              0
+            );
+          }
+
+          words.forEach((word, index) => {
+            tl.to(
+              word,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+              },
+              index * 0.08
+            );
+          });
+
+          locations.forEach((location, index) => {
+            tl.from(
+              location,
+              {
+                opacity: 0,
+                x: -30,
+                duration: 0.7,
+              },
+              index * 0.15 + 0.3
+            );
+          });
+
+          tl.from(
+            content,
+            {
+              opacity: 0,
+              y: 40,
+              duration: 1,
+            },
+            "-=0.5"
+          );
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  observer.observe(seoValueSection);
+
+  if (backgroundMap) {
+    gsap.to(backgroundMap, {
+      y: -80,
+      ease: "none",
+      scrollTrigger: {
+        trigger: seoValueSection,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+  }
+
+  if (headline) {
+    gsap.to(headline, {
+      y: -60,
+      ease: "none",
+      scrollTrigger: {
+        trigger: seoValueSection,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+  }
+}
+
+function initFinalCtaAnimation() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const finalCtaSection = document.querySelector(".final-cta");
+  const image = document.querySelector(".final-cta__image");
+  const headline = document.querySelector(".final-cta__headline");
+  const subheadline = document.querySelector(".final-cta__subheadline");
+  const buttons = document.querySelector(".final-cta__buttons");
+
+  if (!finalCtaSection) return;
+
+  let hasEntered = false;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasEntered) {
+          hasEntered = true;
+
+          const tl = gsap.timeline({
+            defaults: { ease: "power3.out" },
+          });
+
+          tl.to(image, {
+            "--pseudo-y": "-100%",
+            duration: 1.2,
+            ease: "power3.inOut",
+          })
+            .from(
+              headline,
+              {
+                opacity: 0,
+                y: 60,
+                duration: 0.8,
+              },
+              "-=0.6"
+            )
+            .from(
+              subheadline,
+              {
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+              },
+              "-=0.4"
+            )
+            .from(
+              buttons,
+              {
+                opacity: 0,
+                y: 20,
+                duration: 0.6,
+              },
+              "-=0.3"
+            );
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  observer.observe(finalCtaSection);
+
+  gsap.to(image.querySelector("img"), {
+    y: -80,
+    ease: "none",
+    scrollTrigger: {
+      trigger: finalCtaSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+
+  gsap.to(headline, {
+    y: -40,
+    ease: "none",
+    scrollTrigger: {
+      trigger: finalCtaSection,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1,
+    },
+  });
+}
+
+function initFooterAnimation() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const footer = document.querySelector(".footer");
+  const logo = document.querySelector(".footer__logo");
+  const nav = document.querySelector(".footer__nav");
+  const contact = document.querySelector(".footer__contact");
+  const legal = document.querySelector(".footer__legal");
+
+  if (!footer) return;
+
+  let hasEntered = false;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasEntered) {
+          hasEntered = true;
+
+          const tl = gsap.timeline({
+            defaults: { ease: "power3.out" },
+          });
+
+          tl.from(logo, {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+          })
+            .from(
+              nav.querySelectorAll("a"),
+              {
+                opacity: 0,
+                y: 20,
+                duration: 0.6,
+                stagger: 0.05,
+              },
+              "-=0.4"
+            )
+            .from(
+              contact,
+              {
+                opacity: 0,
+                y: 20,
+                duration: 0.6,
+              },
+              "-=0.5"
+            )
+            .from(
+              legal,
+              {
+                opacity: 0,
+                y: 20,
+                duration: 0.6,
+              },
+              "-=0.3"
+            );
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  observer.observe(footer);
+}
+
 function init() {
   initLenis();
   initHeaderScroll();
@@ -845,6 +1105,9 @@ function init() {
   initPersuasionAnimation();
   initProcessAnimation();
   initSocialProofAnimation();
+  initSeoValueAnimation();
+  initFinalCtaAnimation();
+  initFooterAnimation();
 }
 
 init();
