@@ -152,16 +152,16 @@ body {
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 1;
   content: "";
   height: 100%;
   position: absolute;
+  pointer-events: none;
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.2) 0%,
     rgba(0, 0, 0, 0.518) 100%
-  );
-  z-index: 1;
-  pointer-events: none;
+    );
 }
 
 .hero__bg-slide {
@@ -169,9 +169,9 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
   position: absolute;
   visibility: hidden;
-  object-fit: cover;
   transform: translateX(-100%);
 }
 
@@ -1496,18 +1496,6 @@ body {
   overflow: hidden;
   grid-column: 1 / 7;
   aspect-ratio: 4 / 5;
-}
-
-.final-cta__image::after {
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  content: "";
-  height: 100%;
-  position: absolute;
-  background-color: var(--color-navy);
-  transform: translateY(var(--pseudo-y));
 }
 
 .final-cta__image img {
