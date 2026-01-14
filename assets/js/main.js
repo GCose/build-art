@@ -269,10 +269,10 @@ function initTrustAnimation() {
             defaults: { ease: "power3.out" },
           });
 
-          tl.from(trustImage1, {
-            opacity: 0,
-            y: 60,
-            duration: 0.8,
+          tl.to(trustImage1, {
+            "--pseudo-y": "-100%",
+            duration: 1.2,
+            ease: "power3.inOut",
           })
             .from(
               trustTitleBlock,
@@ -281,14 +281,14 @@ function initTrustAnimation() {
                 y: 30,
                 duration: 0.8,
               },
-              "-=0.4"
+              "-=0.8"
             )
-            .from(
+            .to(
               trustImage2,
               {
-                opacity: 0,
-                y: 80,
-                duration: 0.8,
+                "--pseudo-y": "-100%",
+                duration: 1.2,
+                ease: "power3.inOut",
               },
               "-=0.4"
             )
@@ -299,14 +299,14 @@ function initTrustAnimation() {
                 y: 30,
                 duration: 0.8,
               },
-              "-=0.4"
+              "-=0.8"
             )
-            .from(
+            .to(
               trustImage3,
               {
-                opacity: 0,
-                y: 60,
-                duration: 0.8,
+                "--pseudo-y": "-100%",
+                duration: 1.2,
+                ease: "power3.inOut",
               },
               "-=0.4"
             )
@@ -317,7 +317,7 @@ function initTrustAnimation() {
                 y: 30,
                 duration: 0.8,
               },
-              "-=0.4"
+              "-=0.8"
             );
         }
       });
@@ -486,12 +486,12 @@ function initPersuasionAnimation() {
             y: 80,
             duration: 0.8,
           })
-            .from(
+            .to(
               image1,
               {
-                opacity: 0,
-                y: 60,
-                duration: 0.8,
+                "--pseudo-y": "-100%",
+                duration: 1.2,
+                ease: "power3.inOut",
               },
               "-=0.4"
             )
@@ -502,14 +502,14 @@ function initPersuasionAnimation() {
                 y: 40,
                 duration: 0.8,
               },
-              "-=0.4"
+              "-=0.8"
             )
-            .from(
+            .to(
               image2,
               {
-                opacity: 0,
-                y: 80,
-                duration: 0.8,
+                "--pseudo-y": "-100%",
+                duration: 1.2,
+                ease: "power3.inOut",
               },
               "-=0.4"
             );
@@ -522,16 +522,16 @@ function initPersuasionAnimation() {
                 y: 30,
                 duration: 0.6,
               },
-              "-=0.5"
+              "-=0.9"
             );
           });
 
-          tl.from(
+          tl.to(
             image3,
             {
-              opacity: 0,
-              y: 100,
-              duration: 0.8,
+              "--pseudo-y": "-100%",
+              duration: 1.2,
+              ease: "power3.inOut",
             },
             "-=0.4"
           ).from(
@@ -541,7 +541,7 @@ function initPersuasionAnimation() {
               y: 20,
               duration: 0.6,
             },
-            "-=0.5"
+            "-=0.8"
           );
         }
       });
@@ -551,7 +551,7 @@ function initPersuasionAnimation() {
 
   observer.observe(persuasionSection);
 
-  gsap.to(image1.querySelector("img"), {
+  gsap.to(image1, {
     y: -80,
     ease: "none",
     scrollTrigger: {
@@ -562,7 +562,7 @@ function initPersuasionAnimation() {
     },
   });
 
-  gsap.to(image2.querySelector("img"), {
+  gsap.to(image2, {
     y: -120,
     ease: "none",
     scrollTrigger: {
@@ -573,7 +573,7 @@ function initPersuasionAnimation() {
     },
   });
 
-  gsap.to(image3.querySelector("img"), {
+  gsap.to(image3, {
     y: -60,
     ease: "none",
     scrollTrigger: {
@@ -601,10 +601,154 @@ function initProcessAnimation() {
 
   const processSection = document.querySelector(".process");
   const headline = document.querySelector(".process__headline");
-  const items = document.querySelectorAll(".process__item");
+  const cards = gsap.utils.toArray(".process__item");
   const cta = document.querySelector(".process__cta");
 
-  if (!processSection) return;
+  if (!processSection || cards.length === 0) return;
+
+  let hasEntered = false;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasEntered) {
+          hasEntered = true;
+
+          gsap.from(headline, {
+            opacity: 0,
+            y: 80,
+            duration: 0.8,
+            ease: "power3.out",
+          });
+
+          ScrollTrigger.create({
+            trigger: headline,
+            start: "bottom top",
+            end: "bottom top-=1",
+            onEnter: () => {
+              processSection.classList.add("process--dark");
+            },
+            onLeaveBack: () => {
+              processSection.classList.remove("process--dark");
+            },
+          });
+
+          cards.forEach((card, index) => {
+            const image = card.querySelector(".process__image");
+            const step = card.querySelector(".process__step");
+
+            if (index < cards.length - 1) {
+              ScrollTrigger.create({
+                trigger: card,
+                start: "top top",
+                end: () => `+=${window.innerHeight}`,
+                pin: true,
+                pinSpacing: false,
+              });
+
+              gsap.to(image, {
+                "--pseudo-y": "-100%",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 85%",
+                  toggleActions: "play none none reverse",
+                },
+                duration: 0.8,
+                ease: "power3.out",
+              });
+
+              gsap.from(step, {
+                opacity: 0,
+                y: 40,
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 80%",
+                  toggleActions: "play none none reverse",
+                },
+                duration: 0.8,
+                ease: "power3.out",
+              });
+
+              gsap.to(card, {
+                scale: 0.7,
+                rotateZ: -15,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: cards[index + 1],
+                  start: "top bottom",
+                  end: "top top",
+                  scrub: true,
+                },
+              });
+            } else {
+              gsap.to(image, {
+                "--pseudo-y": "-100%",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 60%",
+                  toggleActions: "play none none reverse",
+                },
+                duration: 1.2,
+                ease: "power3.inOut",
+              });
+
+              gsap.from(step, {
+                opacity: 0,
+                y: 40,
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 80%",
+                  toggleActions: "play none none reverse",
+                },
+                duration: 0.8,
+                ease: "power3.out",
+              });
+
+              ScrollTrigger.create({
+                trigger: card,
+                start: "top center",
+                onEnter: () => {
+                  processSection.classList.remove("process--dark");
+                },
+                onLeaveBack: () => {
+                  processSection.classList.add("process--dark");
+                },
+              });
+            }
+          });
+
+          if (cta) {
+            gsap.from(cta, {
+              opacity: 0,
+              y: 20,
+              scrollTrigger: {
+                trigger: cta,
+                start: "top 90%",
+                toggleActions: "play none none reverse",
+              },
+              duration: 0.6,
+              ease: "power3.out",
+            });
+          }
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  observer.observe(processSection);
+}
+
+function initSocialProofAnimation() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const socialProofSection = document.querySelector(".social-proof");
+  const headline = document.querySelector(".social-proof__headline");
+  const images = document.querySelectorAll(".social-proof__image");
+  const testimonials = document.querySelectorAll(".social-proof__testimonial");
+  const cta = document.querySelector(".social-proof__cta");
+
+  if (!socialProofSection) return;
 
   let hasEntered = false;
 
@@ -624,26 +768,27 @@ function initProcessAnimation() {
             duration: 0.8,
           });
 
-          items.forEach((item) => {
-            const image = item.querySelector(".process__image");
-            const step = item.querySelector(".process__step");
-
-            tl.from(
+          images.forEach((image, index) => {
+            tl.to(
               image,
               {
-                opacity: 0,
-                y: 60,
-                duration: 0.8,
+                "--pseudo-y": "-100%",
+                duration: 1.2,
+                ease: "power3.inOut",
               },
-              "-=0.4"
-            ).from(
-              step,
+              index * 0.15
+            );
+          });
+
+          testimonials.forEach((testimonial, index) => {
+            tl.from(
+              testimonial,
               {
                 opacity: 0,
                 y: 40,
                 duration: 0.8,
               },
-              "-=0.6"
+              index * 0.3 + 0.4
             );
           });
 
@@ -662,16 +807,14 @@ function initProcessAnimation() {
     { threshold: 0.2 }
   );
 
-  observer.observe(processSection);
+  observer.observe(socialProofSection);
 
-  items.forEach((item) => {
-    const image = item.querySelector(".process__image img");
-
+  images.forEach((image) => {
     gsap.to(image, {
-      y: -100,
+      y: -80,
       ease: "none",
       scrollTrigger: {
-        trigger: item,
+        trigger: image,
         start: "top bottom",
         end: "bottom top",
         scrub: 1,
@@ -680,10 +823,10 @@ function initProcessAnimation() {
   });
 
   gsap.to(headline, {
-    y: -60,
+    y: -100,
     ease: "none",
     scrollTrigger: {
-      trigger: processSection,
+      trigger: socialProofSection,
       start: "top bottom",
       end: "bottom top",
       scrub: 1,
@@ -701,6 +844,7 @@ function init() {
   initServicesAnimation();
   initPersuasionAnimation();
   initProcessAnimation();
+  initSocialProofAnimation();
 }
 
 init();
