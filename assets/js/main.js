@@ -248,12 +248,8 @@ function initTrustAnimation() {
   gsap.registerPlugin(ScrollTrigger);
 
   const trustSection = document.querySelector(".trust");
-  const trustImage1 = document.querySelector(".trust__image--1");
-  const trustImage2 = document.querySelector(".trust__image--2");
-  const trustImage3 = document.querySelector(".trust__image--3");
-  const trustTitleBlock = document.querySelector(".trust__title-block");
-  const trustLocations = document.querySelector(".trust__locations");
-  const trustDescription = document.querySelector(".trust__description");
+  const images = document.querySelectorAll(".trust__image");
+  const content = document.querySelector(".trust__content");
 
   if (!trustSection) return;
 
@@ -265,133 +261,28 @@ function initTrustAnimation() {
         if (entry.isIntersecting && !hasEntered) {
           hasEntered = true;
 
-          const tl = gsap.timeline({
-            defaults: { ease: "power3.out" },
+          gsap.from(images, {
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
           });
 
-          tl.to(trustImage1, {
-            "--pseudo-y": "-100%",
-            duration: 1.2,
-            ease: "power3.inOut",
-          })
-            .from(
-              trustTitleBlock,
-              {
-                opacity: 0,
-                y: 30,
-                duration: 0.8,
-              },
-              "-=0.8"
-            )
-            .to(
-              trustImage2,
-              {
-                "--pseudo-y": "-100%",
-                duration: 1.2,
-                ease: "power3.inOut",
-              },
-              "-=0.4"
-            )
-            .from(
-              trustLocations,
-              {
-                opacity: 0,
-                y: 30,
-                duration: 0.8,
-              },
-              "-=0.8"
-            )
-            .to(
-              trustImage3,
-              {
-                "--pseudo-y": "-100%",
-                duration: 1.2,
-                ease: "power3.inOut",
-              },
-              "-=0.4"
-            )
-            .from(
-              trustDescription,
-              {
-                opacity: 0,
-                y: 30,
-                duration: 0.8,
-              },
-              "-=0.8"
-            );
+          gsap.from(content, {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            delay: 0.6,
+            ease: "power3.out",
+          });
         }
       });
     },
-    { threshold: 0.3 }
+    { threshold: 0.2 }
   );
 
   observer.observe(trustSection);
-
-  gsap.to(trustImage1.querySelector("img"), {
-    y: -150,
-    ease: "none",
-    scrollTrigger: {
-      trigger: trustSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
-
-  gsap.to(trustImage2.querySelector("img"), {
-    y: -100,
-    ease: "none",
-    scrollTrigger: {
-      trigger: trustSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
-
-  gsap.to(trustImage3.querySelector("img"), {
-    y: -40,
-    ease: "none",
-    scrollTrigger: {
-      trigger: trustSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
-
-  gsap.to(trustTitleBlock, {
-    y: -120,
-    ease: "none",
-    scrollTrigger: {
-      trigger: trustSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
-
-  gsap.to(trustLocations, {
-    y: -60,
-    ease: "none",
-    scrollTrigger: {
-      trigger: trustSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
-
-  gsap.to(trustDescription, {
-    y: -20,
-    ease: "none",
-    scrollTrigger: {
-      trigger: trustSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
 }
 
 function initServicesAnimation() {
@@ -416,7 +307,6 @@ function initServicesAnimation() {
             start: "top top",
             end: "bottom bottom",
             pin: wrapper,
-            pinSpacing: false,
           });
 
           cards.forEach((card, index) => {
@@ -459,13 +349,8 @@ function initPersuasionAnimation() {
   gsap.registerPlugin(ScrollTrigger);
 
   const persuasionSection = document.querySelector(".persuasion");
-  const headline = document.querySelector(".persuasion__headline");
-  const proofText = document.querySelector(".persuasion__proof");
-  const image1 = document.querySelector(".persuasion__image--1");
-  const image2 = document.querySelector(".persuasion__image--2");
-  const image3 = document.querySelector(".persuasion__image--3");
-  const bullets = document.querySelectorAll(".persuasion__bullets li");
-  const cta = document.querySelector(".persuasion__cta");
+  const content = document.querySelector(".persuasion__content");
+  const images = document.querySelectorAll(".persuasion__image");
 
   if (!persuasionSection) return;
 
@@ -477,72 +362,21 @@ function initPersuasionAnimation() {
         if (entry.isIntersecting && !hasEntered) {
           hasEntered = true;
 
-          const tl = gsap.timeline({
-            defaults: { ease: "power3.out" },
-          });
-
-          tl.from(headline, {
+          gsap.from(content, {
             opacity: 0,
-            y: 80,
+            y: 40,
             duration: 0.8,
-          })
-            .to(
-              image1,
-              {
-                "--pseudo-y": "-100%",
-                duration: 1.2,
-                ease: "power3.inOut",
-              },
-              "-=0.4"
-            )
-            .from(
-              proofText,
-              {
-                opacity: 0,
-                y: 40,
-                duration: 0.8,
-              },
-              "-=0.8"
-            )
-            .to(
-              image2,
-              {
-                "--pseudo-y": "-100%",
-                duration: 1.2,
-                ease: "power3.inOut",
-              },
-              "-=0.4"
-            );
-
-          bullets.forEach((bullet) => {
-            tl.from(
-              bullet,
-              {
-                opacity: 0,
-                y: 30,
-                duration: 0.6,
-              },
-              "-=0.9"
-            );
+            ease: "power3.out",
           });
 
-          tl.to(
-            image3,
-            {
-              "--pseudo-y": "-100%",
-              duration: 1.2,
-              ease: "power3.inOut",
-            },
-            "-=0.4"
-          ).from(
-            cta,
-            {
-              opacity: 0,
-              y: 20,
-              duration: 0.6,
-            },
-            "-=0.8"
-          );
+          gsap.from(images, {
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            stagger: 0.15,
+            delay: 0.4,
+            ease: "power3.out",
+          });
         }
       });
     },
@@ -550,50 +384,6 @@ function initPersuasionAnimation() {
   );
 
   observer.observe(persuasionSection);
-
-  gsap.to(image1, {
-    y: -80,
-    ease: "none",
-    scrollTrigger: {
-      trigger: persuasionSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
-
-  gsap.to(image2, {
-    y: -120,
-    ease: "none",
-    scrollTrigger: {
-      trigger: persuasionSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
-
-  gsap.to(image3, {
-    y: -60,
-    ease: "none",
-    scrollTrigger: {
-      trigger: persuasionSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
-
-  gsap.to(headline, {
-    y: -100,
-    ease: "none",
-    scrollTrigger: {
-      trigger: persuasionSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
 }
 
 function initProcessAnimation() {
@@ -745,7 +535,6 @@ function initSocialProofAnimation() {
   const socialProofSection = document.querySelector(".social-proof");
   const headline = document.querySelector(".social-proof__headline");
   const images = document.querySelectorAll(".social-proof__image");
-  const testimonials = document.querySelectorAll(".social-proof__testimonial");
   const cta = document.querySelector(".social-proof__cta");
 
   if (!socialProofSection) return;
@@ -758,49 +547,29 @@ function initSocialProofAnimation() {
         if (entry.isIntersecting && !hasEntered) {
           hasEntered = true;
 
-          const tl = gsap.timeline({
-            defaults: { ease: "power3.out" },
-          });
-
-          tl.from(headline, {
+          gsap.from(headline, {
             opacity: 0,
-            y: 80,
+            y: 40,
             duration: 0.8,
+            ease: "power3.out",
           });
 
-          images.forEach((image, index) => {
-            tl.to(
-              image,
-              {
-                "--pseudo-y": "-100%",
-                duration: 1.2,
-                ease: "power3.inOut",
-              },
-              index * 0.15
-            );
+          gsap.from(images, {
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            stagger: 0.1,
+            delay: 0.4,
+            ease: "power3.out",
           });
 
-          testimonials.forEach((testimonial, index) => {
-            tl.from(
-              testimonial,
-              {
-                opacity: 0,
-                y: 40,
-                duration: 0.8,
-              },
-              index * 0.3 + 0.4
-            );
+          gsap.from(cta, {
+            opacity: 0,
+            y: 20,
+            duration: 0.6,
+            delay: 1.2,
+            ease: "power3.out",
           });
-
-          tl.from(
-            cta,
-            {
-              opacity: 0,
-              y: 20,
-              duration: 0.6,
-            },
-            "-=0.4"
-          );
         }
       });
     },
@@ -808,30 +577,6 @@ function initSocialProofAnimation() {
   );
 
   observer.observe(socialProofSection);
-
-  images.forEach((image) => {
-    gsap.to(image, {
-      y: -80,
-      ease: "none",
-      scrollTrigger: {
-        trigger: image,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1,
-      },
-    });
-  });
-
-  gsap.to(headline, {
-    y: -100,
-    ease: "none",
-    scrollTrigger: {
-      trigger: socialProofSection,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1,
-    },
-  });
 }
 
 function initSeoValueAnimation() {
