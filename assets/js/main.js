@@ -320,10 +320,12 @@ function initServicesAnimation() {
   gsap.registerPlugin(ScrollTrigger);
 
   const section = document.querySelector(".services");
+  const title = document.querySelector(".services__title");
+  const cardsContainer = document.querySelector(".services__cards-container");
   const wrapper = document.querySelector(".services__wrapper");
   const cards = gsap.utils.toArray(".service-card");
 
-  if (!section || !wrapper || cards.length === 0) return;
+  if (!section || !cardsContainer || !wrapper || cards.length === 0) return;
 
   let hasEntered = false;
 
@@ -333,19 +335,33 @@ function initServicesAnimation() {
         if (entry.isIntersecting && !hasEntered) {
           hasEntered = true;
 
+          // Animate title
+          if (title) {
+            gsap.from(title, {
+              opacity: 0,
+              y: 40,
+              duration: 0.8,
+              ease: "power3.out",
+            });
+          }
+
+          // Pin wrapper when cards container reaches top
           ScrollTrigger.create({
-            trigger: section,
+            trigger: cardsContainer,
             start: "top top",
             end: "bottom bottom",
             pin: wrapper,
+            pinSpacing: false,
           });
 
+          // Set initial positions
           cards.forEach((card, index) => {
             if (index > 0) {
               gsap.set(card, { xPercent: 100 });
             }
           });
 
+          // Animate cards sliding in
           cards.forEach((card, index) => {
             if (index === 0) return;
 
@@ -359,10 +375,10 @@ function initServicesAnimation() {
                 xPercent: 0,
                 ease: "none",
                 scrollTrigger: {
-                  trigger: section,
-                  start: `top+=${progress * section.offsetHeight} top`,
-                  end: `top+=${nextProgress * section.offsetHeight} top`,
-                  scrub: 1,
+                  trigger: cardsContainer,
+                  start: `top+=${progress * cardsContainer.offsetHeight} top`,
+                  end: `top+=${nextProgress * cardsContainer.offsetHeight} top`,
+                  scrub: true,
                 },
               }
             );
