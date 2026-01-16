@@ -18,6 +18,37 @@ function initLenis() {
   return lenis;
 }
 
+function initMobileMenu() {
+  const menuToggle = document.querySelector(".header__menu-toggle");
+  const nav = document.querySelector(".header__nav");
+  const body = document.body;
+
+  if (!menuToggle) return;
+
+  menuToggle.addEventListener("click", () => {
+    menuToggle.classList.toggle("active");
+    nav.classList.toggle("active");
+    body.style.overflow = nav.classList.contains("active") ? "hidden" : "";
+  });
+
+  const navLinks = document.querySelectorAll(".header__nav a");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      menuToggle.classList.remove("active");
+      nav.classList.remove("active");
+      body.style.overflow = "";
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768 && nav.classList.contains("active")) {
+      menuToggle.classList.remove("active");
+      nav.classList.remove("active");
+      body.style.overflow = "";
+    }
+  });
+}
+
 function initHeaderScroll() {
   const header = document.querySelector(".header");
   let lastScroll = 0;
@@ -143,7 +174,7 @@ function initHeroAnimations() {
     );
 
   gsap.to(heroTitle, {
-    y: -280,
+    yPercent: -50,
     scale: 0.95,
     ease: "none",
     immediateRender: false,
@@ -151,29 +182,29 @@ function initHeroAnimations() {
       trigger: ".hero",
       start: "top top",
       end: "bottom top",
-      scrub: 1,
+      scrub: true,
     },
   });
 
   gsap.to([heroServiceLeft, heroServiceCenter, heroServiceRight], {
-    y: -450,
+    yPercent: -80,
     ease: "none",
     scrollTrigger: {
       trigger: ".hero",
       start: "top top",
       end: "bottom top",
-      scrub: 1,
+      scrub: true,
     },
   });
 
   gsap.to(heroCtas, {
-    y: -150,
+    yPercent: -30,
     ease: "none",
     scrollTrigger: {
       trigger: ".hero",
       start: "top top",
       end: "bottom top",
-      scrub: 1,
+      scrub: true,
     },
   });
 }
@@ -841,6 +872,7 @@ function initFooterAnimation() {
 
 function init() {
   initLenis();
+  initMobileMenu();
   initHeaderScroll();
   initHeroSlider();
   initHeroAnimations();
