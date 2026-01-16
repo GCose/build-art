@@ -7,6 +7,7 @@
   --color-light-gray: #f5f5f5;
   --color-light-gray-2: #f1f0f0;
 
+  --font-body: "Boska", serif;
   --font-family: "Manrope", sans-serif;
   --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
@@ -45,10 +46,20 @@ html.lenis body {
 
 body {
   line-height: 1.6;
+  font-weight: 800;
   overflow-x: hidden;
   color: var(--color-navy);
-  font-family: var(--font-family);
+  font-family: var(--font-body);
   background-color: var(--color-cream);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family);
 }
 
 .container {
@@ -171,7 +182,7 @@ body {
   letter-spacing: 0.01em;
   color: var(--color-white);
   transition: color 0.3s ease;
-  font-size: clamp(0.875rem, 1vw, 1rem);
+  font-size: clamp(0.875rem, 2vw, 1.2rem);
 }
 
 .header.header--scrolled .header__nav a {
@@ -264,7 +275,7 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-white);
-  font-size: clamp(0.75rem, 1vw, 1rem);
+  font-size: clamp(0.75rem, 2vw, 1.2rem);
 }
 
 .hero__service-center {
@@ -441,8 +452,8 @@ body {
 }
 
 .intro .speed-line {
-  width: 22px;
   opacity: 0;
+  width: 22px;
   height: 600px;
   position: relative;
   background: linear-gradient(
@@ -510,7 +521,7 @@ body {
   letter-spacing: -0.01em;
   color: var(--color-navy);
   padding: clamp(2rem, 4vw, 3rem);
-  font-size: clamp(1.5rem, 3.5vw, 2.7rem);
+  font-size: clamp(1.5rem, 3.5vw, 2.8rem);
 }
 
 .intro__text .word {
@@ -580,7 +591,7 @@ body {
   font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--color-navy);
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-size: clamp(1rem, 1.5vw, 1.6rem);
 }
 
 .trust__image {
@@ -697,8 +708,8 @@ body {
   position: absolute;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.219) 0%,
-    rgba(0, 0, 0, 0.118) 100%
+    rgba(0, 0, 0, 0.597) 0%,
+    rgba(0, 0, 0, 0.597) 100%
   );
 }
 
@@ -741,8 +752,8 @@ body {
   line-height: 1.6;
   grid-column: 1 / 7;
   color: var(--color-white);
-  font-size: clamp(1rem, 3vw, 1.2rem);
-  padding-bottom: clamp(1rem, 2vh, 1.5rem);
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  padding-bottom: clamp(1rem, 3vw, 2rem);
 }
 
 .service-card__cta {
@@ -809,12 +820,12 @@ body {
 .persuasion__text {
   opacity: 0.8;
   margin: 0 auto;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.6;
   max-width: 900px;
   letter-spacing: -0.01em;
   color: var(--color-navy);
-  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+  font-size: clamp(1.1rem, 3vw, 2rem);
 }
 
 .persuasion__grid {
@@ -864,7 +875,7 @@ body {
 
 .persuasion__bullets {
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 950px;
   padding-bottom: clamp(4rem, 8vh, 6rem);
 }
 
@@ -883,7 +894,7 @@ body {
   position: relative;
   letter-spacing: 0.01em;
   color: var(--color-navy);
-  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  font-size: clamp(1rem, 1.5vw, 1.6rem);
   padding-left: clamp(1.5rem, 2.5vw, 2rem);
 }
 
@@ -1090,9 +1101,9 @@ body {
 .process__step-description {
   opacity: 0.7;
   line-height: 1.6;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-navy);
-  font-size: clamp(1rem, 1.5vw, 1.4rem);
+  font-size: clamp(1rem, 2vw, 1.8rem);
 }
 
 .process__cta {
