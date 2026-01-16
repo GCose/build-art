@@ -396,8 +396,10 @@ function initPersuasionAnimation() {
   gsap.registerPlugin(ScrollTrigger);
 
   const persuasionSection = document.querySelector(".persuasion");
-  const content = document.querySelector(".persuasion__content");
+  const header = document.querySelector(".persuasion__header");
   const images = document.querySelectorAll(".persuasion__image");
+  const bullets = document.querySelector(".persuasion__bullets");
+  const cta = document.querySelector(".persuasion__cta");
 
   if (!persuasionSection) return;
 
@@ -409,7 +411,7 @@ function initPersuasionAnimation() {
         if (entry.isIntersecting && !hasEntered) {
           hasEntered = true;
 
-          gsap.from(content, {
+          gsap.from(header, {
             opacity: 0,
             y: 40,
             duration: 0.8,
@@ -420,8 +422,24 @@ function initPersuasionAnimation() {
             opacity: 0,
             y: 40,
             duration: 0.8,
-            stagger: 0.15,
+            stagger: 0.1,
             delay: 0.4,
+            ease: "power3.out",
+          });
+
+          gsap.from(bullets, {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            delay: 0.8,
+            ease: "power3.out",
+          });
+
+          gsap.from(cta, {
+            opacity: 0,
+            y: 20,
+            duration: 0.6,
+            delay: 1.2,
             ease: "power3.out",
           });
         }

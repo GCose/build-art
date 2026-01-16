@@ -636,8 +636,8 @@ body {
   position: relative;
   background-color: var(--color-cream);
   padding-top: clamp(8rem, 15vh, 12rem);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: clamp(10rem, 20vh, 15rem);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .services__header {
@@ -794,26 +794,22 @@ body {
 
 .persuasion {
   padding: clamp(10rem, 20vh, 15rem) 0;
+  background-color: var(--color-cream);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.persuasion__grid {
-  display: grid;
-  gap: var(--grid-gap);
-  grid-template-rows: auto clamp(400px, 65vh, 800px);
-  grid-template-columns: repeat(var(--grid-columns), 1fr);
-}
-
-.persuasion__content {
+.persuasion__header {
   display: flex;
-  grid-column: 3 / 11;
+  text-align: center;
   flex-direction: column;
   gap: clamp(2rem, 4vh, 3rem);
-  padding-bottom: clamp(4rem, 8vh, 6rem);
+  padding-bottom: clamp(6rem, 12vh, 10rem);
 }
 
 .persuasion__headline {
+  margin: 0 auto;
   font-weight: 200;
+  max-width: 1200px;
   line-height: 0.95;
   letter-spacing: -0.04em;
   color: var(--color-navy);
@@ -822,20 +818,73 @@ body {
 
 .persuasion__text {
   opacity: 0.8;
+  margin: 0 auto;
   font-weight: 300;
   line-height: 1.6;
+  max-width: 900px;
   letter-spacing: -0.01em;
   color: var(--color-navy);
   font-size: clamp(1.1rem, 1.8vw, 1.6rem);
 }
 
+.persuasion__grid {
+  display: grid;
+  gap: var(--grid-gap);
+  margin-bottom: clamp(6rem, 12vh, 10rem);
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  grid-template-rows: clamp(500px, 85vh,  1000px) clamp(400px, 55vh, 700px);
+}
+
+.persuasion__image {
+  overflow: hidden;
+  position: relative;
+}
+
+.persuasion__image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.persuasion__image--hero {
+  grid-row: 1;
+  grid-column: 1 / 13;
+}
+
+.persuasion__image:nth-child(2) {
+  grid-row: 2;
+  grid-column: 1 / 4;
+}
+
+.persuasion__image:nth-child(3) {
+  grid-row: 2;
+  grid-column: 4 / 7;
+}
+
+.persuasion__image:nth-child(4) {
+  grid-row: 2;
+  grid-column: 7 / 10;
+}
+
+.persuasion__image:nth-child(5) {
+  grid-row: 2;
+  grid-column: 10 / 13;
+}
+
 .persuasion__bullets {
+  margin: 0 auto;
+  max-width: 800px;
+  padding-bottom: clamp(4rem, 8vh, 6rem);
+}
+
+.persuasion__bullets ul {
   margin: 0;
   padding: 0;
+  display: grid;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(0.75rem, 1.5vh, 1rem);
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vh, 2rem) clamp(2rem, 4vw, 3rem);
 }
 
 .persuasion__bullets li {
@@ -856,11 +905,15 @@ body {
   color: var(--color-gold);
 }
 
+.persuasion__cta-wrapper {
+  text-align: center;
+}
+
 .persuasion__cta {
   font-weight: 500;
   text-decoration: none;
+  display: inline-block;
   letter-spacing: 0.01em;
-  align-self: flex-start;
   color: var(--color-navy);
   transition: color 0.3s ease;
   font-size: clamp(1rem, 1.5vw, 1.2rem);
@@ -870,44 +923,43 @@ body {
   color: var(--color-gold);
 }
 
-.persuasion__image {
-  overflow: hidden;
-}
-
-.persuasion__image:nth-child(2) {
-  grid-column: 1 / 4;
-}
-
-.persuasion__image:nth-child(3) {
-  grid-column: 4 / 7;
-}
-
-.persuasion__image:nth-child(4) {
-  grid-column: 7 / 13;
-}
-
-.persuasion__image img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
-
 @media (max-width: 768px) {
   .persuasion__grid {
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto repeat(4, auto);
   }
 
-  .persuasion__content {
+  .persuasion__image--hero {
     grid-column: 1 / 13;
-    padding-bottom: 3rem;
+    grid-row: 1;
+    aspect-ratio: 4 / 3;
   }
 
   .persuasion__image:nth-child(2),
   .persuasion__image:nth-child(3),
-  .persuasion__image:nth-child(4) {
+  .persuasion__image:nth-child(4),
+  .persuasion__image:nth-child(5) {
     grid-column: 1 / 13;
     aspect-ratio: 4 / 3;
+  }
+
+  .persuasion__image:nth-child(2) {
+    grid-row: 2;
+  }
+
+  .persuasion__image:nth-child(3) {
+    grid-row: 3;
+  }
+
+  .persuasion__image:nth-child(4) {
+    grid-row: 4;
+  }
+
+  .persuasion__image:nth-child(5) {
+    grid-row: 5;
+  }
+
+  .persuasion__bullets ul {
+    grid-template-columns: 1fr;
   }
 }
 
