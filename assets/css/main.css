@@ -58,6 +58,41 @@ body {
   padding: 0 var(--container-padding);
 }
 
+.btn {
+  cursor: pointer;
+  font-weight: 400;
+  text-decoration: none;
+  display: inline-block;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  font-size: clamp(0.8rem, 1vw, 0.95rem);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: clamp(0.85rem, 2vh, 1.2rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.btn--primary {
+  color: var(--color-navy);
+  border-color: var(--color-white);
+  background-color: var(--color-white);
+}
+
+.btn--primary:hover {
+  color: var(--color-white);
+  background-color: transparent;
+}
+
+.btn--secondary {
+  color: var(--color-white);
+  background-color: transparent;
+  border-color: var(--color-white);
+}
+
+.btn--secondary:hover {
+  color: var(--color-navy);
+  background-color: var(--color-white);
+}
+
 .header {
   top: 0;
   left: 0;
@@ -280,41 +315,6 @@ body {
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
-.btn {
-  cursor: pointer;
-  font-weight: 400;
-  text-decoration: none;
-  display: inline-block;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  border: 1px solid transparent;
-  font-size: clamp(0.8rem, 1vw, 0.95rem);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: clamp(0.85rem, 2vh, 1.2rem) clamp(1.5rem, 3vw, 2.5rem);
-}
-
-.btn--primary {
-  color: var(--color-navy);
-  border-color: var(--color-white);
-  background-color: var(--color-white);
-}
-
-.btn--primary:hover {
-  color: var(--color-white);
-  background-color: transparent;
-}
-
-.btn--secondary {
-  color: var(--color-white);
-  background-color: transparent;
-  border-color: var(--color-white);
-}
-
-.btn--secondary:hover {
-  color: var(--color-navy);
-  background-color: var(--color-white);
-}
-
 @media (max-width: 1024px) {
   .hero__title {
     grid-column: 1 / 10;
@@ -322,7 +322,7 @@ body {
   }
 
   .hero__ctas {
-    grid-column: 8 / 13;
+    grid-column: 5 / 13;
   }
 }
 
@@ -390,9 +390,6 @@ body {
 
   .hero__ctas {
     grid-row: 3;
-    gap: 0.75rem;
-    align-self: end;
-    grid-column: 1 / 13;
   }
 
   .btn {
@@ -415,13 +412,8 @@ body {
     font-size: 0.6rem;
   }
 
-  .hero__title {
-    font-size: clamp(1.75rem, 6vw, 2.5rem);
-  }
-
   .hero__ctas {
     gap: 0.65rem;
-    flex-direction: column;
   }
 
   .btn {
@@ -576,11 +568,11 @@ body {
 }
 
 .trust__headline {
-  font-weight: 300;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-weight: 200;
+  letter-spacing: -0.04em;
   color: var(--color-navy);
-  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  font-size: clamp(3rem, 5.5vw, 6rem);
 }
 
 .trust__locations {
@@ -646,11 +638,11 @@ body {
 }
 
 .services__title {
-  line-height: 1;
   font-weight: 200;
-  letter-spacing: -0.03em;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
   color: var(--color-navy);
-  font-size: clamp(3rem, 6vw, 7rem);
+  font-size: clamp(3rem, 5.5vw, 6rem);
 }
 
 .services__cards-container {
@@ -793,9 +785,9 @@ body {
 }
 
 .persuasion {
-  padding: clamp(10rem, 20vh, 15rem) 0;
   background-color: var(--color-cream);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: clamp(2rem, 5vw, 10rem) 0 clamp(3rem, 10vw, 5rem) 0;
 }
 
 .persuasion__header {
@@ -807,9 +799,7 @@ body {
 }
 
 .persuasion__headline {
-  margin: 0 auto;
   font-weight: 200;
-  max-width: 1200px;
   line-height: 0.95;
   letter-spacing: -0.04em;
   color: var(--color-navy);
@@ -832,7 +822,7 @@ body {
   gap: var(--grid-gap);
   margin-bottom: clamp(6rem, 12vh, 10rem);
   grid-template-columns: repeat(var(--grid-columns), 1fr);
-  grid-template-rows: clamp(500px, 85vh,  1000px) clamp(400px, 55vh, 700px);
+  grid-template-rows: clamp(500px, 85vh, 1000px) clamp(400px, 55vh, 700px);
 }
 
 .persuasion__image {
@@ -967,7 +957,7 @@ body {
   overflow: hidden;
   min-height: 400vh;
   position: relative;
-  padding-top: clamp(10rem, 20vh, 15rem);
+  padding-top: clamp(2rem, 5vw, 10rem);
   transition: background-color 0.6s ease;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -988,8 +978,8 @@ body {
   letter-spacing: -0.04em;
   color: var(--color-navy);
   transition: color 0.6s ease;
-  font-size: clamp(3.5rem, 7vw, 9rem);
   padding: 0 var(--container-padding);
+  font-size: clamp(3rem, 5.5vw, 6rem);
   margin-bottom: clamp(6rem, 12vh, 10rem);
 }
 
